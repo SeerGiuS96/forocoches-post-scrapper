@@ -1,4 +1,4 @@
-# ForoCoches Post Scraper
+# FC Post Scraper
 
 Este proyecto nace de la curiosidad por analizar y aprender de los comentarios y experiencias compartidas por los usuarios de ForoCoches. Quería recopilar consejos, errores y anécdotas de los foreros, y de paso, practicar programación y scraping web con Python.
 
