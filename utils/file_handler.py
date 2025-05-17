@@ -1,7 +1,5 @@
 import json
 import logging
-from typing import List
-from src.models import Post
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,7 @@
 import sys
 import logging
+import time
+import random
 from bs4 import BeautifulSoup
 from src.scraper import ForoCochesScraper
 from utils.network import fetch_html
@@ -62,6 +64,7 @@ def main():
         logger.info(f"El hilo tiene {last_page} páginas.")
 
         # 2. Procesa todas las páginas
+        all_posts = []
         for page in range(1, last_page + 1):
             url = get_thread_url(THREAD_ID, page)
             logger.info(f"URL: {url}")
@@ -70,13 +73,18 @@ def main():
                 logger.error(f"No se pudo obtener el HTML de la página {page}")
                 break
 
-            posts = scraper.scrape_thread(html)
+            posts = scraper.scrape_thread(html, posts_so_far=all_posts)
             if not posts:
                 logger.info(f"No se encontraron posts en la página {page}.")
                 continue
 
             logger.info(f"Encontrados {len(posts)} posts en la página {page}")
             all_posts.extend(posts)
+
+            # Protección anti-baneo
+            sleep_time = random.uniform(1, 3)
+            logger.info(f"Esperando {sleep_time:.2f} segundos para evitar baneos...")
+            time.sleep(sleep_time)
 
         if all_posts:
             logger.info(f"Total de posts encontrados: {len(all_posts)}")
